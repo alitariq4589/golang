@@ -19,4 +19,33 @@ node("x86_runner2"){
             ./all.bash
         '''
     }
+    stage(' CLEANUP'){
+        cleanWs()
+    }
+}
+
+node ("riscv64_runner1"){
+    stage('*** 60s Sleep ***') {
+        sleep(time:60, unit:'SECONDS')
+    }
+    stage(' CLEANUP'){
+        cleanWs()
+    }
+    stage ('CHECKOUT riscv64'){
+        checkout scm
+    }
+    stage("BUILD riscv64"){
+        sh'''#!/bin/bash
+            echo -e "[jenkinsfile INFO]: Setting environment variables"
+            export GOROOT_BOOTSTRAP=/snap/go/10001
+            export GOARCH=riscv64
+            export GOOS=linux
+            echo -e "[jenkinsfile INFO]: Starting Build..."
+            cd src
+            ./all.bash
+        '''
+    }
+    stage(' CLEANUP'){
+        cleanWs()
+    }
 }
