@@ -1,0 +1,22 @@
+node("x86_runner2"){
+    stage('*** 60s Sleep ***') {
+        sleep(time:60, unit:'SECONDS')
+    }
+    stage(' CLEANUP'){
+        cleanWs()
+    }
+    stage ('CHECKOUT x86'){
+        checkout scm
+    }
+    stage("BUILD x86_64"){
+        sh'''#!/bin/bash
+            echo -e "[jenkinsfile INFO]: Setting environment variables"
+            export GOROOT_BOOTSTRAP=/snap
+            export GOARCH=amd64
+            export GOOS=linux
+            echo -e "[jenkinsfile INFO]: Starting Build..."
+            cd src
+            ./all.bash
+        '''
+    }
+}
