@@ -11,7 +11,7 @@ node("x86_runner2"){
     stage("BUILD x86_64"){
         sh'''#!/bin/bash
             echo -e "[jenkinsfile INFO]: Setting environment variables"
-            export GOROOT_BOOTSTRAP=/snap
+            export GOROOT_BOOTSTRAP=/snap/go/9991
             export GOARCH=amd64
             export GOOS=linux
             echo -e "[jenkinsfile INFO]: Starting Build..."
